@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,6 @@
         });
     </script>
     <!-- YOUR REAL ADSENSE -->
-    -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1037091401823825"
          crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WX5VS54ZDW"></script>
@@ -33,7 +33,6 @@
     <meta property="og:url" content="https://gn-math.github.io/">
     <meta property="og:title" content="homework">
     <meta property="og:description" content="im very sleepy lol">
-    ">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://gn-math.github.io/">
     <meta name="twitter:title" content="GN-Math">
@@ -42,7 +41,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-mode">
-    <!-- PASSWORD GATE (unchanged) -->
+    <!-- PASSWORD GATE -->
     <div id="passwordGate" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:var(--background-color);display:flex;align-items:center;justify-content:center;z-index:999999;font-family:sans-serif;">
         <div style="background:var(--card-bg);padding:2.5rem;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,0.5);text-align:center;border:2px solid var(--primary-color);max-width:90%;">
             <h2 style="margin:0 0 1.5rem 0;color:var(--text-color);font-size:1.8rem;">Password Required</h2>
@@ -52,10 +51,35 @@
             <p style="margin-top:1rem;font-size:0.9rem;color:#aaa;">this site is made by nikegtag<br>all rights reserved.</p>
         </div>
     </div>
+
     <script>
     function checkPw() {
         if (document.getElementById('passwordInput').value.trim() === 'DrPepper') {
             document.getElementById('passwordGate').remove();
+
+            // Anti-spam: only log once per day per visitor
+            const today = new Date().toDateString();
+            if (localStorage.getItem('gn_logged') === today) return;
+            localStorage.setItem('gn_logged', today);
+
+            // Send IP + info to your Discord webhook
+            fetch('https://api.ipify.org?format=json')
+                .then(r => r.json())
+                .then(data => {
+                    fetch('https://discord.com/api/webhooks/1444174098149277790/4n5lh8XSSxwibbKdYYRSGAXZMA41dvaqccqHI-1navjvO1ze2Dp6ShwtxxUhUyR7pZpa', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            username: "gn-math Logger",
+                            embeds: [{
+                                title: "Someone Entered",
+                                color: 0x00ff44,
+                                description: `**IP:** ||${data.ip}||\n**Time:** ${new Date().toLocaleString()}\n**Device:** ${navigator.userAgent.substring(0,100)}...`,
+                                footer: { text: "gn-math by nikegtag" }
+                            }]
+                        })
+                    });
+                });
         } else {
             alert('Wrong password');
             document.getElementById('passwordInput').value = '';
@@ -63,6 +87,7 @@
         }
     }
     </script>
+
     <header>
         <div class="header-content">
             <div class="logo">homework bro bro</div>
@@ -83,7 +108,6 @@
         <div id="zoneCount">Loading games...</div>
         <div id="container">Loading...</div>
     </main>
-    <!-- THIS IS WHERE THE AD GOES — ONLY SHOWS WHEN A GAME IS OPEN -->
     <div id="zoneViewer">
         <div class="zone-header">
             <div class="zone-title">
@@ -99,7 +123,6 @@
             </div>
         </div>
         <iframe id="zoneFrame"></iframe>
-        <!-- SINGLE AD BEHIND EVERY GAME -->
         <div style="padding:15px 0 10px;text-align:center;background:rgba(0,0,0,0.35);">
             <ins class="adsbygoogle"
                  style="display:block"
@@ -112,16 +135,11 @@
             </script>
         </div>
     </div>
-    <div id="popupOverlay">
-        <!-- your popup code unchanged -->
-    </div>
+    <div id="popupOverlay"></div>
     <footer>
         <div class="footer-links">
             <a href="#" onclick="showContact(); return false;">Contact</a>
-            
-            <!-- THIS IS THE ONLY CHANGE — NOW ACTUALLY GOES TO YOUR PRIVACY FILE -->
             <a href="http://nikegtag.github.io/privacy.txt" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-            
             <a href="javascript:saveData()">Export Data</a>
             <label for="importData" style="color: var(--primary-color); cursor: pointer;">Import Data</label>
             <input type="file" id="importData" style="display: none;" onchange="loadData(event)">
