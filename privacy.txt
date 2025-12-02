@@ -1,4 +1,4 @@
-PRIVACY POLICY
+# PRIVACY POLICY
 gn-math
 Last updated: November 28, 2025
 We keep this short because we barely collect anything.
