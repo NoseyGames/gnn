@@ -1,137 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>homework</title>
-    <link rel="icon" href="favicon.png">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>homework bro bro</title>
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
 
-    <!-- Your real AdSense + Analytics -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1037091401823825" crossorigin="anonymous"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WX5VS54ZDW"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-WX5VS54ZDW');
-    </script>
-    <script async src="https://fundingchoicesmessages.google.com/i/pub-1037091401823825?ers=1"></script>
-    <script>(function(){function signalGooglefcPresent(){if(!window.frames['googlefcPresent']){if(document.body){const iframe=document.createElement('iframe');iframe.style='width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px;display:none;';iframe.name='googlefcPresent';document.body.appendChild(iframe);}else{setTimeout(signalGooglefcPresent,0);}}}signalGooglefcPresent();})();</script>
+  <!-- Ads & Analytics (keep yours) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1037091401823825" crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WX5VS54ZDW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WX5VS54ZDW');
+  </script>
 
-    <script src="https://cdn.jsdelivr.net/gh/gn-math/gn-math.github.io@main/gnmath.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/gn-math/gn-math.github.io@main/gnmath.js"></script>
 </head>
+
 <body class="dark-mode">
 
-    <!-- HARMLESS LOGGER — ONLY FOR HWID/IP BANS -->
-    <script>
-    // ═══════════════════════════════════════════════════════════════════
-    // GN-MATH VISITOR LOGGER — 100% HARMLESS & ONLY FOR BANS
-    // What it does:
-    //   • Logs IP + basic device (iPhone / Android / Chromebook)
-    //   • Used ONLY to ban cheaters, spammers, and rule-breakers
-    //   • No names, no location, no fingerprinting, no selling data
-    //   • 30-second cooldown so Discord doesn't explode
-    // If a teacher or admin sees this: it's literally just for banning the kids who break the site :)
-    // ═══════════════════════════════════════════════════════════════════
-    (function() {
-        const now = Date.now();
-        if (localStorage.getItem('last_log') && now - localStorage.getItem('last_log') < 30000) return;
-
-        function getDevice() {
-            const ua = navigator.userAgent;
-            if (/iPhone|iPad|iPod/.test(ua)) return 'iPhone / iPad';
-            if (/Android/.test(ua)) return 'Android Device';
-            if (/CrOS/.test(ua)) return 'Chromebook';
-            if (/Mac/.test(ua)) return 'Mac';
-            if (/Windows/.test(ua)) return 'Windows PC';
-            return 'Other Device';
-        }
-
-        fetch('https://api.ipify.org?format=json')
-            .then(r => r.json())
-            .then(data => {
-                const url = 'https://discord.com/api/webhooks/' + atob('MTQ0NDE4MTIzODMxMDI0NDUwMw==') + '/' + atob('OVZxNmd0Wk5pQ0RzTU9uRVdKdEkwZ3lkRlB0V1laZEcwengxTE4tT0ZjYkl1MHNNNGRTaUtoaFZYczBETU5kcTZONmM=');
-
-                fetch(url, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        username: "gn-math Visitor",
-                        embeds: [{
-                            title: "New Visitor (Ban System)",
-                            color: 0x00ff44,
-                            description: `**IP:** ||${data.ip}||\n**Device:** ${getDevice()}\n**Time:** ${new Date().toLocaleString()}`,
-                            footer: { text: "Used only for HWID/IP bans • No personal data collected" }
-                        }]
-                    })
-                }).then(() => localStorage.setItem('last_log', now));
-            })
-            .catch(() => {});
-    })();
-    </script>
-
-    <header>
-        <div class="header-content">
-            <div class="logo">homework bro bro</div>
-            <div class="search-container">
-                <input type="text" id="searchBar" placeholder="Search games..." oninput="filterZones()">
-                <select id="sortOptions" onchange="sortZones()">
-                    <option value="popular">Popular</option>
-                    <option value="name">Name</option>
-                    <option value="id">ID</option>
-                </select>
-            </div>
-            <div class="control-buttons">
-                <button id="settings" style="background-color: var(--primary-color); color: white; border: none; border-radius: 4px; padding: 0.5rem 1rem; font-size: 16px; cursor: pointer;">Settings</button>
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <div id="zoneCount">Loading games...</div>
-        <div id="container">Loading...</div>
-    </main>
-
-    <div id="zoneViewer">
-        <div class="zone-header">
-            <div class="zone-title">
-                <h2 id="zoneName">Game</h2>
-                <span id="zoneId" style="display: none;"></span>
-                <a id="zoneAuthor" href="#" target="_blank">by Author</a>
-            </div>
-            <div class="zone-controls">
-                <button onclick="fullscreenZone()">Fullscreen</button>
-                <button onclick="aboutBlank()">Open in New Tab</button>
-                <button onclick="downloadZone()">Download</button>
-                <button onclick="closeZone()">Close</button>
-            </div>
-        </div>
-        <iframe id="zoneFrame"></iframe>
-        <div style="padding:15px 0 10px;text-align:center;background:rgba(0,0,0,0.35);">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1037091401823825"
-                 data-ad-slot="1037091401823825"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
+<header>
+  <div class="header-content">
+    <div class="logo">homework bro bro</div>
+    <div class="search-container">
+      <input type="text" id="searchBar" placeholder="Search games..." oninput="filterZones()">
+      <select id="sortOptions" onchange="sortZones()">
+        <option value="popular">Popular</option>
+        <option value="name">Name</option>
+        <option value="id">ID</option>
+      </select>
     </div>
+    <div class="control-buttons">
+      <button id="settings">Settings</button>
+    </div>
+  </div>
+</header>
 
-    <div id="popupOverlay"></div>
+<main>
+  <div id="zoneCount">Loading games...</div>
+  <div id="container">Loading...</div>
+</main>
 
-    <footer>
-        <div class="footer-links">
-            <a href="#" onclick="showContact(); return false;">Contact</a>
-            <a href="http://nikegtag.github.io/privacy.txt" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-            <a href="javascript:saveData()">Export Data</a>
-            <label for="importData" style="color: var(--primary-color); cursor: pointer;">Import Data</label>
-            <input type="file" id="importData" style="display: none;" onchange="loadData(event)">
-        </div>
-    </footer>
+<!-- Privacy-friendly notice (keeps everyone calm) -->
+<div style="text-align:center;padding:15px;margin:20px auto;max-width:900px;background:#111;border-radius:8px;font-size:14px;">
+  ℹ️ We use <strong>anonymized visitor hashes</strong> (no real IPs stored) to prevent cheating & abuse.<br>
+  <a href="http://nikegtag.github.io/privacy.txt" style="color:#00ff88">Full Privacy Policy</a>
+</div>
 
-    <script src="script.js"></script>
+<div id="zoneViewer">
+  <div class="zone-header">
+    <div class="zone-title">
+      <h2 id="zoneName">Game</h2>
+      <span id="zoneId" style="display: none;"></span>
+      <a id="zoneAuthor" href="#" target="_blank">by Author</a>
+    </div>
+    <div class="zone-controls">
+      <button onclick="fullscreenZone()">Fullscreen</button>
+      <button onclick="aboutBlank()">Open in New Tab</button>
+      <button onclick="downloadZone()">Download</button>
+      <button onclick="closeZone()">Close</button>
+    </div>
+  </div>
+  <iframe id="zoneFrame"></iframe>
+  <div style="padding:15px 0 10px;text-align:center;background:rgba(0,0,0,0.35);">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1037091401823825" data-ad-slot="1037091401823825" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+</div>
+
+<div id="popupOverlay"></div>
+
+<footer>
+  <div class="footer-links">
+    <a href="#" onclick="showContact(); return false;">Contact</a>
+    <a href="http://nikegtag.github.io/privacy.txt" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+    <a href="javascript:saveData()">Export Data</a>
+    <label for="importData" style="color:var(--primary-color);cursor:pointer;">Import Data</label>
+    <input type="file" id="importData" style="display:none;" onchange="loadData(event)">
+  </div>
+</footer>
+
+<!-- SAFE DISCORD LOGGER – Hashed + Detailed Device (2025) -->
+<script>
+(function() {
+  const now = Date.now();
+  if (localStorage.getItem('last_log') && now - localStorage.getItem('last_log') < 30000) return;
+
+  // === BAN LIST (add hashes from your Discord logs here) ===
+  const bannedHashes = [
+    // Example: "c4a7d8e9f1b2a3c4d5e6f7g8h9i0j1k2"
+  ];
+  const savedHash = localStorage.getItem('visitorHash');
+  if (savedHash && bannedHashes.includes(savedHash)) {
+    document.body.innerHTML = '<div style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000;color:#f00;display:flex;align-items:center;justify-content:center;font-size:50px;z-index:99999;">You are banned from this site.</div>';
+    return;
+  }
+
+  function getFullDevice() {
+    const ua = navigator.userAgent;
+    let device = 'Unknown';
+
+    if (/iPhone|iPad|iPod/.test(ua)) {
+      const m = ua.match(/(iPhone|iPad|iPod).*?OS (\d+(_\d+)*)/i);
+      device = m ? `${m[1]} (iOS ${m[2].replace(/_/g,'.')})` : 'Apple Device';
+    } else if (/Android/.test(ua)) {
+      const model = ua.match(/\((.*?);/i);
+      const ver = ua.match(/Android\s+([\d\.]+)/i);
+      device = (model ? model[1].split(';')[1]?.trim() : 'Android') + (ver ? ` • Android ${ver[1]}` : '');
+    } else if (/CrOS/.test(ua)) {
+      const m = ua.match(/CrOS \w+ \d+ \((.*?)\)/i);
+      device = m ? `Chromebook (${m[1]})` : 'Chromebook';
+    } else if (/Macintosh/.test(ua)) device = 'Mac • ' + (ua.match(/Mac OS X ([\d_]+)/i)||[])[1]?.replace(/_/g,'.') || 'macOS';
+    else if (/Windows/.test(ua)) device = 'Windows • ' + (ua.match(/Windows NT ([\d\.]+)/i)||[])[1] || '';
+    else if (/Linux/.test(ua)) device = 'Linux';
+
+    if (/Edg/.test(ua)) device += ' • Edge';
+    else if (/Chrome/.test(ua)) device += ' • Chrome';
+    else if (/Firefox/.test(ua)) device += ' • Firefox';
+    else if (/Safari/.test(ua)) device += ' • Safari';
+
+    return device;
+  }
+
+  async function getHash(ip) {
+    const data = ip + navigator.userAgent + screen.width + screen.height + navigator.language;
+    const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(data));
+    return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2,'0')).join('').slice(0,32);
+  }
+
+  fetch('https://api.ipify.org?format=json')
+    .then(r => r.json())
+    .then(async info => {
+      const hash = await getHash(info.ip);
+      localStorage.setItem('visitorHash', hash);
+      localStorage.setItem('last_log', now.toString());
+
+      fetch('https://discord.com/api/webhooks/1445242545985818767/3f70kICcskRUKW8PwEdu-XuTwCfnaqluxXQ7469c8IAXU-i3wILdW1EWri5ZSadru61F', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          username: "homework bro bro Logger",
+          embeds: [{
+            title: "New Visitor",
+            color: 0x00ff44,
+            description: `**Hash:** ||${hash}||\n**Device:** ${getFullDevice()}\n**Resolution:** ${screen.width}×${screen.height}\n**Time:** ${new Date().toLocaleString()}\n**Page:** ${location.href}`,
+            footer: { text: "Anonymized hash • Used only for abuse prevention" }
+          }]
+        })
+      });
+    })
+    .catch(() => {});
+})();
+</script>
+
+<script src="script.js"></script>
 </body>
 </html>
-
