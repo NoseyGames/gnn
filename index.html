@@ -21,13 +21,6 @@
 </head>
 <body class="dark-mode">
 
-<!-- ███████ BIG RED BLOCKED SCREEN ███████ -->
-<div id="bannedScreen" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000;z-index:99999999;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#ff0033;font-family:Arial Black,sans-serif;">
-  <h1 style="font-size:120px;margin:0;animation:pulse 1.5s infinite;">BLOCKED</h1>
-  <p style="font-size:28px;margin:20px 0;">You are permanently banned from this site.</p>
-  <p style="font-size:18px;color:#aaa;">If you think this is a mistake, contact the owner.</p>
-</div>
-
 <header>
   <div class="header-content">
     <div class="logo">homework bro bro</div>
@@ -87,54 +80,12 @@
   </div>
 </footer>
 
-<!-- ███████ BAN MANAGER PANEL (only visible on /banhash) ███████ -->
-<div id="banPanel" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000;color:#0f0;z-index:999999;font-family:monospace;padding:20px;overflow-y:auto;">
-  <h1>homework bro bro – Ban Manager</h1>
-  <p>Password required.</p>
-  <input type="password" id="banPassword" placeholder="Enter password" style="padding:10px;font-size:18px;width:300px;">
-  <button onclick="checkPass()">Enter</button>
-
-  <div id="banContent" style="display:none;margin-top:30px;">
-    <h2>Ban / Unban Hash</h2>
-    <input type="text" id="hashInput" placeholder="32-char hash" style="width:420px;padding:10px;">
-    <button onclick="banHash()">Ban</button>
-    <button onclick="unbanHash()">Unban</button>
-
-    <h2 style="margin-top:30px;">Banned Hashes (<span id="banCount">0</span>)</h2>
-    <ul id="bannedList" style="list-style:none;padding:0;"></ul>
-
-    <h2 style="margin-top:30px;">Recent Visitors (last 20)</h2>
-    <div id="recentList"></div>
-
-    <br><br>
-    <button onclick="location.href='/'" style="padding:12px;background:#333;color:#fff;">← Back to site</button>
-  </div>
-</div>
-
-<style>
-  @keyframes pulse { 0% {text-shadow:0 0 20px #f00} 50% {text-shadow:0 0 60px #f00} 100% {text-shadow:0 0 20px #f00} }
-</style>
-
-<!-- ███████ MAIN SCRIPT (Logger + Ban System) ███████ -->
+<!-- Simple anonymous visitor logger (once every 30 sec) -->
 <script>
-// CHANGE THESE TWO LINES ONLY
-const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1445242545985818767/3f70kICcskRUKW8PwEdu-XuTwCfnaqluxXQ7469c8IAXU-i3wILdW1EWri5ZSadru61F"; // ← your webhook
-const BAN_PASSWORD = "changeme123"; // ← change this!!
-
-// Ban check + logger
 (function() {
-  const bannedHashes = JSON.parse(localStorage.getItem('bannedHashes') || '[]');
   const now = Date.now();
-
-  // Show BLOCKED screen immediately if banned
-  if (localStorage.getItem('visitorHash') && bannedHashes.includes(localStorage.getItem('visitorHash'))) {
-    document.getElementById('bannedScreen').style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    return;
-  }
-
   if (localStorage.getItem('last_log') && now - localStorage.getItem('last_log') < 30000) return;
-
+  
   async function getHash(ip) {
     const data = ip + navigator.userAgent + screen.width + screen.height + navigator.language;
     const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(data));
@@ -160,94 +111,24 @@ const BAN_PASSWORD = "changeme123"; // ← change this!!
     .then(r => r.json())
     .then(async info => {
       const hash = await getHash(info.ip);
-      localStorage.setItem('visitorHash', hash);
-
-      if (bannedHashes.includes(hash)) {
-        document.getElementById('bannedScreen').style.display = 'flex';
-        return;
-      }
-
-      // Save to recent visitors
-      let recent = JSON.parse(localStorage.getItem('recentVisitors') || '[]');
-      recent.unshift({hash, device: getDevice(), resolution: `${screen.width}×${screen.height}`, time: now, page: location.pathname});
-      if (recent.length > 20) recent.pop();
-      localStorage.setItem('recentVisitors', JSON.stringify(recent));
-
       localStorage.setItem('last_log', now.toString());
 
-      // Send to Discord
-      fetch(DISCORD_WEBHOOK, {
+      fetch('https://discord.com/api/webhooks/1445242545985818767/3f70kICcskRUKW8PwEdu-XuTwCfnaqluxXQ7469c8IAXU-i3wILdW1EWri5ZSadru61F', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           username: "homework bro bro Logger",
           embeds: [{
             title: "New Visitor",
-            color: 65280,
+            color: 0x00ff44,
             description: `||${hash}||\n**Device:** ${getDevice()}\n**Res:** ${screen.width}×${screen.height}\n**Page:** ${location.href}\n<t:${Math.floor(now/1000)}:F>`,
-            footer: {text: "Abuse prevention"}
+            footer: { text: "Anonymous • Abuse prevention only" }
           }]
         })
       });
-    });
+    })
+    .catch(() => {});
 })();
-
-// ███████ BAN PANEL LOGIC ███████
-if (location.pathname === '/banhash') {
-  document.getElementById('banPanel').style.display = 'block';
-  document.body.style.overflow = 'hidden';
-}
-
-function checkPass() {
-  if (document.getElementById('banPassword').value === BAN_PASSWORD) {
-    document.getElementById('banContent').style.display = 'block';
-    document.getElementById('banPassword').parentNode.style.display = 'none';
-    loadBans(); loadRecent();
-  } else alert('Wrong password');
-}
-
-function loadBans() {
-  const banned = JSON.parse(localStorage.getItem('bannedHashes') || '[]');
-  document.getElementById('banCount').textContent = banned.length;
-  const ul = document.getElementById('bannedList'); ul.innerHTML = '';
-  banned.forEach(h => {
-    const li = document.createElement('li');
-    li.innerHTML = `<code>${h}</code> <button onclick="unbanHash('${h}')">Unban</button>`;
-    ul.appendChild(li);
-  });
-}
-
-function banHash() {
-  const h = document.getElementById('hashInput').value.trim();
-  if (h.length !== 32) return alert('Hash must be 32 chars');
-  let banned = JSON.parse(localStorage.getItem('bannedHashes') || '[]');
-  if (!banned.includes(h)) {
-    banned.push(h);
-    localStorage.setItem('bannedHashes', JSON.stringify(banned));
-    loadBans();
-    document.getElementById('hashInput').value = '';
-    alert('Banned');
-  } else alert('Already banned');
-}
-
-function unbanHash(h) {
-  let banned = JSON.parse(localStorage.getItem('bannedHashes') || '[]');
-  banned = banned.filter(x => x !== (h || document.getElementById('hashInput').value.trim()));
-  localStorage.setItem('bannedHashes', JSON.stringify(banned));
-  loadBans();
-}
-
-function loadRecent() {
-  const recent = JSON.parse(localStorage.getItem('recentVisitors') || '[]');
-  const div = document.getElementById('recentList'); div.innerHTML = '';
-  recent.forEach(v => {
-    const p = document.createElement('p');
-    p.innerHTML = `<strong>${new Date(v.time).toLocaleString()}</strong><br>
-                   <code>${v.hash}</code> — ${v.device} — ${v.resolution} — ${v.page}<br>
-                   <button onclick="document.getElementById('hashInput').value='${v.hash}';">Copy to ban field</button>`;
-    div.appendChild(p);
-  });
-}
 </script>
 
 <script src="script.js"></script>
