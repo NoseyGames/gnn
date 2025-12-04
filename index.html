@@ -26,9 +26,7 @@
             iframe.style='width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px;display:none;';
             iframe.name='googlefcPresent';
             document.body.appendChild(iframe);
-          } else {
-            setTimeout(signalGooglefcPresent,0);
-          }
+          } else setTimeout(signalGooglefcPresent,0);
         }
       }
       signalGooglefcPresent();
@@ -101,14 +99,14 @@
   </div>
 </footer>
 
-<!-- FINAL WORKING LOGGER + STATS COUNTER -->
+<!-- DISCORD LOGGER + LIVE COUNTER (WITH YOUR TOKEN) -->
 <script>
 (function() {
   const now = Date.now();
   if (localStorage.getItem('last_log') && now - localStorage.getItem('last_log') < 30000) return;
   localStorage.setItem('last_log', now.toString());
 
-  // Discord Logger (keeps your old logs exactly the same)
+  // Discord Logger (unchanged)
   fetch('https://discord.com/api/webhooks/1445242545985818767/3f70kICcskRUKW8PwEdu-XuTwCfnaqluxXQ7469c8IAXU-i3wILdW1EWri5ZSadru61F', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -123,10 +121,14 @@
     })
   });
 
-  // Secret Stats Counter (this makes https://nikegtag.github.io/stats/ work)
-  fetch('https://api.countapi.xyz/hit/nikegtag.github.io/total');
+  // LIVE COUNTER — increments total + today using YOUR token
+  const token = 'ut_BTk65D5FZrDVZFeGVcXOXgh6tEIEm6ukEJJPmue0';
+  const workspace = 'nikegtag';
+  const headers = { 'Authorization': `Token ${token}` };
+
+  fetch(`https://api.counterapi.dev/v1/${workspace}/total/up`, { method: 'POST', headers });
   const today = new Date().toISOString().split('T')[0];
-  fetch('https://api.countapi.xyz/hit/nikegtag.github.io/' + today);
+  fetch(`https://api.counterapi.dev/v1/${workspace}/${today}/up`, { method: 'POST', headers });
 })();
 </script>
 
