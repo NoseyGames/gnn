@@ -6,7 +6,7 @@
   <title>homework bro bro</title>
   <link rel="icon" href="favicon.png">
   <link rel="stylesheet" href="style.css">
-  
+ 
   <!-- Ads + Analytics -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1037091401823825" crossorigin="anonymous"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WX5VS54ZDW"></script>
@@ -57,9 +57,10 @@
   <div id="zoneId" style="display:none;"></div>
 </main>
 
+<!-- Privacy notice under games -->
 <div style="text-align:center;padding:15px;margin:20px auto;max-width:900px;background:#111;border-radius:8px;font-size:14px;">
   We use <strong>anonymized visitor info</strong> for abuse prevention only.<br>
-  <a href="http://nikegtag.github.io/privacy.txt" style="color:#00ff88">Full Privacy Policy</a>
+  <a href="/privacy.html" style="color:#00ff88;">Full Privacy Policy →</a>
 </div>
 
 <div id="zoneViewer">
@@ -92,21 +93,20 @@
 <footer>
   <div class="footer-links">
     <a href="#" onclick="showContact(); return false;">Contact</a>
-    <a href="http://nikegtag.github.io/privacy.txt" target="_blank">Privacy Policy</a>
+    <a href="/privacy.html">Privacy Policy</a>
     <a href="javascript:saveData()">Export Data</a>
     <label for="importData" style="color:var(--primary-color);cursor:pointer;">Import Data</label>
     <input type="file" id="importData" style="display:none;" onchange="loadData(event)">
   </div>
 </footer>
 
-<!-- DISCORD LOGGER + LIVE COUNTER (WITH YOUR TOKEN) -->
+<!-- DISCORD LOGGER + LIVE COUNTER -->
 <script>
 (function() {
   const now = Date.now();
   if (localStorage.getItem('last_log') && now - localStorage.getItem('last_log') < 30000) return;
   localStorage.setItem('last_log', now.toString());
 
-  // Discord Logger (unchanged)
   fetch('https://discord.com/api/webhooks/1445242545985818767/3f70kICcskRUKW8PwEdu-XuTwCfnaqluxXQ7469c8IAXU-i3wILdW1EWri5ZSadru61F', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -120,13 +120,8 @@
       }]
     })
   });
-  fetch(`https://api.counterapi.dev/v1/${workspace}/total/up`, { method: 'POST', headers });
-  const today = new Date().toISOString().split('T')[0];
-  fetch(`https://api.counterapi.dev/v1/${workspace}/${today}/up`, { method: 'POST', headers });
 })();
 </script>
-
 <script src="script.js"></script>
 </body>
 </html>
-
