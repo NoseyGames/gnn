@@ -6,7 +6,7 @@
         // https://www.jsdelivr.com/tools/purge
         const zonesURL =  "https://raw.githubusercontent.com/NikeGtag/data/main/games.json";
         const coverURL = "https://raw.githubusercontent.com/NikeGtag/covers/main";
-        const htmlURL = "https://cdn.jsdelivr.net/gh/gn-math/html@main";
+        const htmlURL = "https://raw.githubusercontent.com/NikeGtag/html/main";
         let zones = [];
         let popularityData = {};
         async function listZones() {
@@ -299,6 +299,7 @@
         }
 
         listZones();
+
 
 
 
