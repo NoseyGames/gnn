@@ -4,8 +4,8 @@
         const searchBar = document.getElementById('searchBar');
         const sortOptions = document.getElementById('sortOptions');
         // https://www.jsdelivr.com/tools/purge
-        const zonesURL = "const zonesURL = "https://raw.githubusercontent.com/NikeGtag/data/main/games.json";";
-        const coverURL = "https://cdn.jsdelivr.net/gh/gn-math/covers@main";
+        const zonesURL =  "https://raw.githubusercontent.com/NikeGtag/data/main/games.json";
+        const coverURL = "https://raw.githubusercontent.com/NikeGtag/covers/main";
         const htmlURL = "https://cdn.jsdelivr.net/gh/gn-math/html@main";
         let zones = [];
         let popularityData = {};
@@ -299,6 +299,7 @@
         }
 
         listZones();
+
 
 
 
