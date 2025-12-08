@@ -7,16 +7,6 @@
   <link rel="icon" href="favicon.png">
   <link rel="stylesheet" href="style.css">
 
-  <!-- Google Tag Manager -->
-  <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-5SJFRL4R');
-  </script>
-  <!-- End Google Tag Manager -->
-
   <!-- Ads + Analytics -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1037091401823825" crossorigin="anonymous"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WX5VS54ZDW"></script>
@@ -46,11 +36,6 @@
 </head>
 <body class="dark-mode">
 
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SJFRL4R"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
 <header>
   <div class="header-content">
     <div class="logo">homework bro bro</div>
@@ -75,8 +60,8 @@
 </main>
 
 <div style="text-align:center;padding:15px;margin:20px auto;max-width:900px;background:#111;border-radius:8px;font-size:14px;">
-  We use <strong>anonymized visitor info</strong> for abuse prevention only.<br>
-  <a href="/privacy.html" style="color:#00ff88;">Full Privacy Policy</a>
+  No visitor data is logged or collected.<br>
+  <a href="/privacy.html" style="color:#00ff88;">Privacy Policy</a>
 </div>
 
 <div id="zoneViewer">
@@ -116,27 +101,6 @@
   </div>
 </footer>
 
-<script>
-(function() {
-  const now = Date.now();
-  if (localStorage.getItem('last_log') && now - localStorage.getItem('last_log') < 30000) return;
-  localStorage.setItem('last_log', now.toString());
-
-  fetch('https://discord.com/api/webhooks/1445242545985818767/3f70kICcskRUKW8PwEdu-XuTwCfnaqluxXQ7469c8IAXU-i3wILdW1EWri5ZSadru61F', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      username: "homework bro bro Logger",
-      embeds: [{
-        title: "New Visitor",
-        color: 0x00ff44,
-        description: `**Device:** ${navigator.userAgent}\n**Res:** ${screen.width}×${screen.height}\n**Page:** ${location.href}\n<t:${Math.floor(now/1000)}:F>`,
-        footer: { text: "Anonymous • Abuse prevention only" }
-      }]
-    })
-  });
-})();
-</script>
 <script src="script.js"></script>
 </body>
 </html>
